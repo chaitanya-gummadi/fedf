@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { color: #333; }
+    input { display:block; margin:8px 0; padding:6px; width:250px; }
+    button { padding:8px 14px; margin-top:10px; cursor:pointer; }
+    .success { color:green; font-weight:bold; }
+    .error { color:red; }
+  </style>
+</head>
+<body>
+  <h2>Registration Page</h2>
+  <form id="form">
+    <input id="name" placeholder="Full Name">
+    <input id="email" placeholder="Email">
+    <input id="pass" type="password" placeholder="Password">
+    <input id="phone" placeholder="Phone (10 digits)">
+    <button type="submit">Register</button>
+  </form>
+  <p id="msg"></p>
+
+  <script>
+    const form = document.getElementById("form"),
+          msg = document.getElementById("msg"),
+          nameField = document.getElementById("name"),
+          emailField = document.getElementById("email"),
+          passField = document.getElementById("pass"),
+          phoneField = document.getElementById("phone");
+
+    form.onsubmit = e => {
+      e.preventDefault();
+      let n = nameField.value.trim(),
+          em = emailField.value.trim(),
+          pw = passField.value.trim(),
+          ph = phoneField.value.trim();
+
+      if (n.length < 3) {
+        msg.textContent = "Name must be at least 3 characters";
+        msg.className = "error";
+      }
+      else if (!/^\S+@\S+\.\S+$/.test(em)) {
+        msg.textContent = "Invalid email format";
+        msg.className = "error";
+      }
+      else if (!/^(?=.[A-Za-z])(?=.\d).{6,}$/.test(pw)) {
+        msg.textContent = "Password must be 6+ chars, include letters & numbers";
+        msg.className = "error";
+      }
+      else if (!/^\d{10}$/.test(ph)) {
+        msg.textContent = "Phone must be exactly 10 digits";
+        msg.className = "error";
+      }
+      else {
+        msg.textContent = "Registration Successful!";
+        msg.className = "success";
+      }
+    };
+  </script>
+</body>
+</html>
